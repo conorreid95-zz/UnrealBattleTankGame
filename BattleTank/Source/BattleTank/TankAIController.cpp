@@ -25,7 +25,7 @@ ATank* ATankAIController::GetControlledTank() const
 	ATank* tank = Cast<ATank>(GetPawn());
 	if (tank) {
 		FString name = tank->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("AI controlling tank: %s"), *name);
+		//UE_LOG(LogTemp, Warning, TEXT("AI controlling tank: %s"), *name);
 		return tank;
 	}
 	else {
