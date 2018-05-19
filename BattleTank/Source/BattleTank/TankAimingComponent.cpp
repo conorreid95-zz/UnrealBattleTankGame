@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TankBarrell.h"
 #include "TankAimingComponent.h"
+#include "TankBarrell.h"
+
 
 
 
@@ -50,7 +51,7 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 	FVector StartLocation = Barrell->GetSocketLocation(FName("Projectile"));
 
 
-	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, WorldSpaceAim, LaunchSpeed, ESuggestProjVelocityTraceOption::DoNotTrace)) {
+	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, WorldSpaceAim, LaunchSpeed, false, 0.0, 0.0, ESuggestProjVelocityTraceOption::DoNotTrace)) {
 
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		//UE_LOG(LogTemp, Warning, TEXT("%s Aiming at: %s from %s"), *GetOwner()->GetName(), *WorldSpaceAim.ToString(), *BarrellLocation.ToString());
@@ -69,6 +70,6 @@ void UTankAimingComponent::MoveBarrellTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrellRotator;
 
-	Barrell->Elevate(5.0);
+	Barrell->Elevate(DeltaRotator.Pitch);
 }
 
