@@ -27,7 +27,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 		ATank* tank = Cast<ATank>(GetPawn());
 		if (tank) {
 			FString name = tank->GetName();
-			UE_LOG(LogTemp, Warning, TEXT("Controlled tank is: %s"), *name);
+			//UE_LOG(LogTemp, Warning, TEXT("Controlled tank is: %s"), *name);
 			return tank;
 		}
 		else {
@@ -104,7 +104,7 @@ bool ATankPlayerController::GetLookDirection(int32 screenX, int32 screenY, FVect
 	FVector WorldLocation = FVector(0.0, 0.0, 0.0);
 
 	if (DeprojectScreenPositionToWorld(screenX, screenY, WorldLocation, LookDirection)) {
-		UE_LOG(LogTemp, Warning, TEXT("Look direction: %s"), *LookDirection.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("Look direction: %s"), *LookDirection.ToString());
 		return true;
 	}
 	else {

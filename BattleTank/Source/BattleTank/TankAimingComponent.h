@@ -10,6 +10,7 @@
 
 //forward declaration
 class UTankBarrell; 
+class UTankTurret;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
@@ -22,11 +23,15 @@ public:
 
 	void SetBarrellReference(UTankBarrell* BarrellToSet);
 
+	void SetTurretReference(UTankTurret* TurretToSet);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	UTankBarrell * Barrell = nullptr;
+
+	UTankTurret * Turret = nullptr;
 
 public:	
 	// Called every frame
