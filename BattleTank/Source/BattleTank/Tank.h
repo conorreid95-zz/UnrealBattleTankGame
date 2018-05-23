@@ -49,4 +49,9 @@ private:
 	TSubclassOf<AProjectile> ProjectileBluePrint;
 
 	UTankBarrell * Barrell = nullptr;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	double ReloadTime = 3.0;
+
+	double LastFireTime = 0;
 };
