@@ -6,16 +6,39 @@
 
 void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet) {
 
-	if (!LeftTrackToSet || !RightTrackToSet) { return; }
+	
 
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }
 
-void UTankMovementComponent::IntendToMove(float Throw) {
+void UTankMovementComponent::IntendToMove(float ThrowF) {
 
-	UE_LOG(LogTemp, Warning, TEXT("Intend to move throw of %f called"), Throw);
+	if (!LeftTrack || !RightTrack) { return; }
+	LeftTrack->SetThrottle(ThrowF);
+	RightTrack->SetThrottle(ThrowF);
+}
 
-	LeftTrack->SetThrottle(Throw);
-	RightTrack->SetThrottle(Throw);
+void UTankMovementComponent::IntendToMoveBack(float ThrowB) {
+
+	if (!LeftTrack || !RightTrack) { return; }
+	LeftTrack->SetThrottle(-ThrowB);
+	RightTrack->SetThrottle(-ThrowB);
+}
+
+
+void UTankMovementComponent::IntendTurnRight(float TurnR) {
+
+	if (!LeftTrack || !RightTrack) { return; }
+	UE_LOG(LogTemp, Warning, TEXT("Turn right called"));
+	LeftTrack->SetThrottle(TurnR);
+	RightTrack->SetThrottle(-TurnR);
+}
+
+void UTankMovementComponent::IntendTurnLeft(float TurnL) {
+
+	if (!LeftTrack || !RightTrack) { return; }
+	UE_LOG(LogTemp, Warning, TEXT("Turn right called"));
+	LeftTrack->SetThrottle(-TurnL);
+	RightTrack->SetThrottle(TurnL);
 }
