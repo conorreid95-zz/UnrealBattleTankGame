@@ -63,6 +63,7 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 		//UE_LOG(LogTemp, Warning, TEXT("%s Aiming at: %s from %s"), *GetOwner()->GetName(), *WorldSpaceAim.ToString(), *BarrellLocation.ToString());
 		//UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"), *GetOwner()->GetName(), *AimDirection.ToString());
 		MoveBarrellTowards(AimDirection);
+		//firingState = EFiringState::Aiming;
 	}
 	else {
 		auto Time = GetWorld()->GetTimeSeconds();
