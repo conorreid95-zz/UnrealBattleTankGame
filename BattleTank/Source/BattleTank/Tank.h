@@ -10,7 +10,6 @@
 class UTankBarrell;
 class UTankTurret;
 class AProjectile;
-class UTankMovementComponent;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -22,20 +21,12 @@ public:
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SetBarrellReference(UTankBarrell* BarrellToSet);
-
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SetTurretReference(UTankTurret* TurretToSet);
-
-	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Fire();
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent * TankAimingComponent = nullptr;
 
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent * TankMovementComponent = nullptr;
 private:	
 
 	ATank();
@@ -43,18 +34,15 @@ private:
 	virtual void BeginPlay() override;
 
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 12000;
 	
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditAnywhere, Category = "Firing")
 	TSubclassOf<AProjectile> ProjectileBluePrint;
 
 	UTankBarrell * Barrell = nullptr;
 
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditAnywhere, Category = "Firing")
 	double ReloadTime = 3.0;
 
 	double LastFireTime = 0;

@@ -27,13 +27,16 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialise(UTankBarrell * BarrellToSet, UTankTurret * TurretToSet);
+
+
+
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void SetBarrellReference(UTankBarrell* BarrellToSet);
-
-	void SetTurretReference(UTankTurret* TurretToSet);
 
 protected:
 	// Called when the game starts

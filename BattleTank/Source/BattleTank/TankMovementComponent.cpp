@@ -29,14 +29,14 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 
 void UTankMovementComponent::IntendToMove(float ThrowF) {
 
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack || !RightTrack)) { return; }
 	LeftTrack->SetThrottle(ThrowF);
 	RightTrack->SetThrottle(ThrowF);
 }
 
 void UTankMovementComponent::IntendToMoveBack(float ThrowB) {
 
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack || !RightTrack)) { return; }
 	LeftTrack->SetThrottle(-ThrowB);
 	RightTrack->SetThrottle(-ThrowB);
 }
@@ -44,16 +44,16 @@ void UTankMovementComponent::IntendToMoveBack(float ThrowB) {
 
 void UTankMovementComponent::IntendTurnRight(float TurnR) {
 
-	if (!LeftTrack || !RightTrack) { return; }
-	UE_LOG(LogTemp, Warning, TEXT("Turn right called"));
+	if (!ensure(LeftTrack || !RightTrack)) { return; }
+	//UE_LOG(LogTemp, Warning, TEXT("Turn right called"));
 	LeftTrack->SetThrottle(TurnR);
 	RightTrack->SetThrottle(-TurnR);
 }
 
 void UTankMovementComponent::IntendTurnLeft(float TurnL) {
 
-	if (!LeftTrack || !RightTrack) { return; }
-	UE_LOG(LogTemp, Warning, TEXT("Turn right called"));
+	if (!ensure(LeftTrack || !RightTrack)) { return; }
+	//UE_LOG(LogTemp, Warning, TEXT("Turn left called"));
 	LeftTrack->SetThrottle(-TurnL);
 	RightTrack->SetThrottle(TurnL);
 }
