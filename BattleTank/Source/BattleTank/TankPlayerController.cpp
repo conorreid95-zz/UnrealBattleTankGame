@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 
 
 ATankPlayerController::ATankPlayerController() {
@@ -12,7 +13,7 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (AimingComponent) {
 		FoundAimingComponent(AimingComponent);
 	}
@@ -29,24 +30,11 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrosshair();
 }
 
-ATank* ATankPlayerController::GetControlledTank() const
-{
-		ATank* tank = Cast<ATank>(GetPawn());
-		if (tank) {
-			FString name = tank->GetName();
-			//UE_LOG(LogTemp, Warning, TEXT("Controlled tank is: %s"), *name);
-			return tank;
-		}
-		else {
-			UE_LOG(LogTemp, Warning, TEXT("No controlled tank"));
-			return nullptr;
-		}
-}
-
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!ensure(GetControlledTank())) {
-		UE_LOG(LogTemp, Warning, TEXT("No tank to aim"));
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!AimingComponent) {
+		return;
 	}
 	else {
 		FVector HitLocation; //out param
@@ -54,7 +42,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 			
 			//ATank* tank = GetControlledTank();
 			//tank->AimAt(HitLocation);
-			GetControlledTank()->AimAt(HitLocation);
+			AimingComponent->AimAt(HitLocation);
 		}
 		else {
 			UE_LOG(LogTemp, Warning, TEXT("No actor hit with raycast"));

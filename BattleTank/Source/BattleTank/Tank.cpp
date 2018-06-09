@@ -17,33 +17,11 @@ ATank::ATank()
 
 }
 
-void ATank::Fire()
-{
-	
-	bool isReloaded = ((FPlatformTime::Seconds() - LastFireTime) > ReloadTime);
 
-	if (Barrell && isReloaded) {
-
-		LastFireTime = FPlatformTime::Seconds();
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint, Barrell->GetSocketLocation(FName("Projectile")), Barrell->GetSocketRotation(FName("Projectile")));
-
-		Projectile->LaunchProjectile(LaunchSpeed);
-	}
-}
 
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	
-}
-
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!ensure(TankAimingComponent)) {	return;}
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-	//UE_LOG(LogTemp, Warning, TEXT("%s Aiming at: %s"),*GetName(), *HitLocation.ToString());
-
 }
 

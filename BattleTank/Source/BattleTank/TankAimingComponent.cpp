@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "TankBarrell.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 
 
 
@@ -13,7 +14,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
 }
@@ -39,11 +40,11 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	UE_LOG(LogTemp, Warning, TEXT("Tick called"));
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector WorldSpaceAim)
 {
 	if (!ensure(Barrell)) { return; }
 
@@ -77,5 +78,19 @@ void UTankAimingComponent::MoveBarrellTowards(FVector AimDirection)
 
 	Barrell->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
+}
+
+void UTankAimingComponent::Fire()
+{
+
+	bool isReloaded = ((FPlatformTime::Seconds() - LastFireTime) > ReloadTime);
+
+	if (ensure(Barrell && isReloaded && ProjectileBluePrint)) {
+
+		LastFireTime = FPlatformTime::Seconds();
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint, Barrell->GetSocketLocation(FName("Projectile")), Barrell->GetSocketRotation(FName("Projectile")));
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+	}
 }
 
